@@ -2,30 +2,16 @@ const express = require("express");
 
 const app = express();
 
+const product = require("./routes/productsRouter");
+const category = require("./routes/categoryRouter");
+
 app.use((req, res, next) => {
   console.log("Middleware 1");
   next();
 });
 
-app.get("/products", (req, res, next) => {
-  console.log(`${req.method.toUpperCase()} request made to ${req.url}`);
-  res.send("<h1>Here is the list of all products</h1>");
-});
-
-app.post("/products", (req, res, next) => {
-  console.log(`${req.method.toUpperCase()} request made to ${req.url}`);
-  res.send("<h1>A new product has been added</h1>");
-});
-
-app.get("/categories", (req, res, next) => {
-  console.log(`${req.method.toUpperCase()} request made to ${req.url}`);
-  res.send("<h1>Here is the list of all categories</h1>");
-});
-
-app.post("/categories", (req, res, next) => {
-  console.log(`${req.method.toUpperCase()} request made to ${req.url}`);
-  res.send("<h1>A new category has been created</h1>");
-});
+app.use("/products", product);
+app.use("/category", category);
 
 app.use(/.*/, (req, res) => {
   res.status(404).send("<h1>404 - Page not Found</h1>");
